@@ -1,6 +1,25 @@
 # 第一周总结
 ---
 ## 预习作业
+
+#### 编写一个 DOM 编辑器：可以自由地操作一个 iframe（空白）中的 DOM 结构，包括增、删、移动。
+[回答]
+
+#### 讲讲 position float display 各有哪些取值，它们互相之间会如何影响？
+position: static | relative | absolute | fixed | sticky
+float: none | left | right
+display: inline | block | flex | table | grid ...
+
+ #### JavaScript 启动后，内存中有多少个对象？如何用代码来获得这些信息？
+1个对象,global? Object.keys(window)
+
+#### HTML 的中，如何写一个值为 “a”=‘b’ 的属性值？
+div.setAttribute('data', `"a"='b'`)
+
+#### 编写一个快速排序代码，并且用动画演示它的过程
+
+
+
 #### 如果你要写一本关于整个前端开发的书，请你列出你的目录。
 
 1. 核心基础：HTML、CSS、JavaScript；
@@ -34,7 +53,22 @@ console.log('lalala')
 目录下 "前端技术目录.png" 与 "前端技术目录.xmind" 文件。
 
 #### 你能不能在 ECMA 中找到所有的类型（Type）
-[回答]
+- Number
+- String
+- Boolean
+- Null
+- Undefined
+- Object
+- Symbol
+- 内部类型
+    The Reference Specification Type
+	The List Specification Type
+	The Completion Specification Type
+	The Property Descriptor and Property Identifier Specification Types
+	 The Lexical Environment and Environment Record Specification Types
+	Algorithms for Object Internal Methods
+	 [[GetOwnProperty]] (P)
+
 
 ## 总结
 总结
