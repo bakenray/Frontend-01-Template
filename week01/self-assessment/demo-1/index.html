@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>当前页面区域</h2>
+    <section class="current_area">
+        <button class="btn" id="addElement">增加一个iframe 方块 元素</button>
+        <button class="btn" >单击方块元素，拖动元素</button>
+        <button class="btn" >双击方块元素，删除元素</button>
+    </section>
+
+    <h2>iframe区域</h2>
+    <iframe 
+        id="iframe"
+        name="iframe_demo"
+        src="./iframe_demo.html" 
+        title="iframe_demo"
+        frameborder="0">
+    </iframe>
+
+    <script>
+            window.onload = function (){
+                let iframeWindow = window.frames['iframe_demo'].window
+                let iframeDocument = iframeWindow.document 
+                let isMove = false
+                listenAddElement()   
+
+                // 添加元素
+                function listenAddElement () {
+                    let currentIndex = 0;
+                    let addElementBtn = document.getElementById('addElement') 
+                    addElementBtn.addEventListener('click',(e)=>{
+                        currentIndex ++
+                        let createElement = document.createElement('span')
+                        let styleStr = 'cursor:pointer;display:inline-block;width:60px;height:60px; margin:12px;background:pink; border-radius:4px;'
+                        createElement.setAttribute('style',styleStr)
+                        createElement.setAttribute('id',`element_${currentIndex}`)  
+                        moveElement(createElement)
+                        removeElement(createElement)
+                        iframeDocument.body.appendChild(createElement)                         
+                        
+                    })                   
+                }
+
+                // 移除元素
+                function removeElement (element) {                   
+                    element.addEventListener('dblclick',e => {
+                        iframeDocument.body.removeChild(element)
+                    })
+                }
+                
+                // 移动元素
+                function moveElement (element) {   
+                    let element_id = ''                 
+                    element.addEventListener('mousedown',e => {
+                        element_id = e.target.id
+                        isMove = true 
+                    })
+                    iframeDocument.body.addEventListener('mousemove',e => {                        
+                        if(isMove && element_id == element.id ){
+                            element.style.position ='absolute'
+                            element.style.top = `${e.clientY - 30}px`
+                            element.style.left = `${e.clientX - 30}px`  
+                        }
+                    })
+                    element.addEventListener('mouseup',e => {
+                        element_id = ''
+                        isMove = false
+                    })
+                }
+            }
+    </script>
+</body>
+</html>

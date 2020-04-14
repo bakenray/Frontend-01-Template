@@ -3,7 +3,7 @@
 ## 预习作业
 
 #### 编写一个 DOM 编辑器：可以自由地操作一个 iframe（空白）中的 DOM 结构，包括增、删、移动。
-[回答]
+
 
 #### 讲讲 position float display 各有哪些取值，它们互相之间会如何影响？
 position: static | relative | absolute | fixed | sticky
