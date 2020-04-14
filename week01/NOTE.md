@@ -6,7 +6,7 @@
 
 [预览效果](http://www.bakenray.com/Frontend-01-Template/week01/self-assessment/iframe_demo/index.html)
 
-[源码地址]('https://github.com/bakenray/Frontend-01-Template/tree/master/week01/self-assessment/iframe_demo')
+[源码地址]('https://github.com/bakenray/Frontend-01-Template/blob/master/week01/self-assessment/iframe_demo/index.html')
 
 #### 讲讲 position float display 各有哪些取值，它们互相之间会如何影响？
 
