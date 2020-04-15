@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快速排序</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section id="cont"></section>
+    <button class="btn" id="btn" >开始快速排序</button>
+    <button class="btn" id="resent" >重置数据</button>
+
+    <script>
+        void function(){  
+            let arr = []   
+            init()                               
+            function init(){
+                initArray()
+                createElement()
+                listenEvents()
+            }
+            function listenEvents(){
+                let btn = document.getElementById('btn')
+                let resent = document.getElementById('resent')
+
+                btn.addEventListener('click',(e)=>{
+                    let nodes = Array.prototype.slice.call(document.querySelectorAll('.box'))
+                    let sortNodes = quickSort(nodes)
+                    sortNodes.forEach((item,index)=>{
+                        document.getElementById(item.id).style.left = `${ index * 80 + 10 }px`
+                    })
+                })
+
+                resent.addEventListener('click',(e)=>{
+                    location.reload()
+                })
+            }
+            function initArray(){
+                let index = 0               
+                while(index < 10){
+                    arr.push(parseInt(Math.random() * 100,10))
+                    index ++
+                } 
+            }
+            function createElement(){
+                arr.map((item,index)=>{
+                    let content = document.getElementById('cont')
+                    let spanElement = document.createElement('span') 
+                    spanElement.setAttribute('class','box')
+                    spanElement.setAttribute('id',`${index}`)
+                    spanElement.innerText =  item
+                    spanElement.style.height =  `${item}px`
+                    spanElement.style.left = `${ index * 80 + 10 }px`
+                    content.appendChild(spanElement)
+                })
+            }
+            function quickSort(nodes){ 
+                if(nodes.length<=1){ return  nodes}
+                let left = [], 
+                    right= [],
+                    mid = Math.round(nodes.length / 2),
+                    base = nodes.splice(mid,1)[0], 
+                    oldBase = base.className
+                    base.className += ' active' 
+                    console.log('1')
+                
+                    console.log('2')
+                    nodes.map((item,index)=>{
+                    let numbers = Number(item.innerText)
+
+                        if( numbers < Number(base.innerText)){
+                            left.push(item)
+                        }else{
+                            right.push(item)
+                        }  
+                })
+                
+                return quickSort(left).concat([base],quickSort(right))
+            }
+        }()
+    </script>
+</body>
+</html>
