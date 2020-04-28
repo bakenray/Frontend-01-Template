@@ -1,46 +1,34 @@
-function converStringToNumber(string,radix=10){
-    var chars = string.split('')
-    var number = 0
-    var i = 0
-    var reg = /[a-vA-V]/g
-    var arr = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v']
-    // 整数
-    while (i<chars.length && chars[i] != '.'){
-        number = number * radix
-        
-        //2-10进制
-        if(radix <= 10){
-            //超出进制范围，返回NaN
-            if(chars[i] > radix-1 || reg.test(chars[i])){
-                return number = NaN
-            } 
-            number += chars[i].codePointAt(0) - '0'.codePointAt(0)				  
-        }
-        //11-16进制
-        else if(10 < radix <= 32){				
-            let char = chars[i].toLowerCase()
-            let item = 10
-            if(arr.indexOf(char) !== -1 && arr.indexOf(char) < radix - item){
-                item += arr.indexOf(char)
-                number += item
-            }
-            else if(/\d/.test(char)) {
-                number += chars[i].codePointAt(0) - '0'.codePointAt(0) 
-            }
-            else {
-                return number = NaN
-            }
-        }
-        i++								
+function convernumberToString(num, radix = 10) {
+    if(Number.isNaN(num) || radix > 32 ) {
+        return 'NaN'
+    }   
+    let absNum = Math.abs(num)
+    let sign = ''
+    let integer = Math.floor(absNum);
+    let fraction = String(absNum).match(/\.\d+$/);
+    let string = '';
+    let result = ''
+    
+    if(fraction) {  
+       fraction = Number(fraction[0]).toString(radix).replace(/^0/,'');
     }
-    //小数
-    if(chars[i] === '.'){ i++ }
-    var fraction = 1
-    while(i < chars.length){
-        fraction = fraction/radix
-        number += (chars[i].codePointAt(0) - '0'.codePointAt(0))*fraction
-        i++
+    if(num < 0) {
+        sign = '-'
     }
-
-    return number
-}	
+    if(absNum === Infinity) {
+        return `${sign}Infinity`
+    }
+    while (integer > 0) {
+        let value = ''
+        if(radix <= 32 && radix >=10 && (integer % radix>=10)){
+            value = String.fromCodePoint((integer % radix) + ('a'.codePointAt() -  10) )
+        }else{
+            value =  integer % radix
+        }
+        string = String(value) + string;
+        integer = Math.floor(integer / radix);
+    }
+    result = fraction ? `${string}${fraction}` : string
+    result = `${sign}${result}`  
+    return result;
+}

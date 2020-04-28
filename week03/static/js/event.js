@@ -16,6 +16,6 @@ btn.addEventListener('click',(e)=>{
         outputElement.value = converStringToNumber(string,Number(radix)?Number(radix):void 0)
     }
     else if(name==='numberToString'){
-       
+        outputElement.value = convernumberToString(string,Number(radix)?Number(radix):void 0)
     }
 })
