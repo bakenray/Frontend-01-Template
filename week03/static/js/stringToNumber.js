@@ -2,27 +2,34 @@ function converStringToNumber(string,radix=10){
     var chars = ''
     var number = 0
     var i = 0
+    var signReg =/^[+-][0-9a-z]+$/i
+    var sign = ''
     var allReg = /[a-vA-V]/
     var hexReg =/^0x[0-9a-f]+$/i
     var octReg = /^0o[0-7]+$/i
     var binReg =/^0b[0-1]+$/i
+    // 带符号
+    if(signReg.test(string)){
+        console.log('-----')
+        sign = string[0] ==='-' ?'-':''
+        string = string.replace(/^[+-]/i,'')
+        console.log('string',string)
+    }
     // 带0x前缀 16进制
-    while(hexReg.test(string)){
+    if(hexReg.test(string)){
         radix = 16
         string = string.replace(/^0x/ig,'')    
     }
      // 带0o前缀 8进制
-    while(octReg.test(string)){
+     if(octReg.test(string)){
         radix = 8
         string = string.replace(/^0o/ig,'')
     }
      // 带0b前缀 2进制
-    while(binReg.test(string)){
+     if(binReg.test(string)){
         radix = 2
         string = string.replace(/^0b/ig,'')
     }
-    console.log('string',string)
-    console.log('radix',radix)
     chars = string.split('')
     // 整数
     while (i<chars.length && chars[i] != '.'){
@@ -61,6 +68,9 @@ function converStringToNumber(string,radix=10){
         fraction = fraction/radix
         number += (chars[i].codePointAt(0) - '0'.codePointAt(0))*fraction
         i++
+    }
+    if(sign === '-'){
+        number = number - number*2
     }
     return number
 }	
