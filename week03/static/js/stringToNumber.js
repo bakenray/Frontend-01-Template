@@ -1,15 +1,37 @@
 function converStringToNumber(string,radix=10){
-    var chars = string.split('')
+    var chars = ''
     var number = 0
     var i = 0
-    var reg = /[a-vA-V]/
+    var allReg = /[a-vA-V]/
+    var hexReg =/^0x[0-9a-f]+$/i
+    var octReg = /^0o[0-7]+$/i
+    var binReg =/^0b[0-1]+$/i
+    // 带0x前缀 16进制
+    while(hexReg.test(string)){
+        radix = 16
+        string = string.replace(/^0x/ig,'')    
+    }
+     // 带0o前缀 8进制
+    while(octReg.test(string)){
+        radix = 8
+        string = string.replace(/^0o/ig,'')
+    }
+     // 带0b前缀 2进制
+    while(binReg.test(string)){
+        radix = 2
+        string = string.replace(/^0b/ig,'')
+    }
+    console.log('string',string)
+    console.log('radix',radix)
+    chars = string.split('')
     // 整数
     while (i<chars.length && chars[i] != '.'){
         number = number * radix
         //2-10进制
         if(radix <= 10){
             //超出进制范围，返回NaN
-            if(chars[i] > radix-1 || reg.test(chars[i])){
+            console.log('chars',chars[i])
+            if(chars[i] > radix-1 || (/[a-z]/i).test(chars[i])){
                 return number = NaN
             } 
             number += chars[i].codePointAt(0) - '0'.codePointAt(0)				  
@@ -20,7 +42,7 @@ function converStringToNumber(string,radix=10){
             let char = chars[i].toLowerCase()
             let pointNum = char.codePointAt(0) -87 
 
-            if(reg.test(char) && (pointNum< radix)){
+            if(allReg.test(char) && (pointNum< radix)){
                 number += pointNum
             }
             else if(/\d/.test(char)) {
