@@ -239,9 +239,7 @@ void async function () {
       name: "bakenray"
     }
   }
-
   let request = new Request(options)
-
   let response = await request.send()
   console.log(response)
 }()
