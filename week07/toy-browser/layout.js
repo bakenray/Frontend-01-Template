@@ -277,7 +277,9 @@ function layout(element){
     else {
         crossBase = 0;
     }
+    
     var lineSize = style[crossSize] / flexLines.length;
+
     var step;
     if(style.alignContent === 'flex-start'){
         crossBase += 0;
