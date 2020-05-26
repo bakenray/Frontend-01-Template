@@ -121,8 +121,10 @@ function emit(token){
         }      
 
         computeCSS(element);
+        layout(element);
 
-        top.children.push(element);    
+        top.children.push(element); 
+           
         element.parent = top;
 
         if(!token.isSelfClosing){
@@ -138,9 +140,9 @@ function emit(token){
             if(top.tagName === 'style'){
                 addCSSRules(top.children[0].content);
             }
-            layout(top);
             stack.pop();
         }
+        layout(top);
         currentTextNode = null;
     }
     else if (token.type == 'text'){
