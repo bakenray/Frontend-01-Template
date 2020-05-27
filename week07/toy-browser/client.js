@@ -6,7 +6,7 @@ const images = require('images');
 class Request{
     constructor(options){
         this.method = options.method || 'GET';
-        this.path = options.path;
+        this.path = options.path || '/';
         this.host = options.host;
         this.port = options.port || 80;
         this.body = options.body || {};
@@ -20,18 +20,17 @@ class Request{
         else if(this.headers['Content-Type'] === 'application/x-www-form-urlencoded'){
             this.bodyText = Object.keys(this.body).map(key => 
                 `${key}=${encodeURIComponent(this.body[key])}`
-            ).join('&')
+            ).join('&');
             this.headers['Content-Length'] = this.bodyText.length;
         }
     }
 
     toString(){
 return `${this.method} ${this.path} HTTP/1.1\r
-${Object.keys(this.headers).map(key => `${key}:${this.headers[key]}`).join('\r\n')}\r
+${Object.keys(this.headers).map(key => `${key}: ${this.headers[key]}`).join('\r\n')}\r
 \r
 ${this.bodyText}
-\r\n`
-    }
+\r\n`}
 
     send(connection){
         return new Promise((resolve,reject)=>{
@@ -228,7 +227,6 @@ class TrunkedBodyParser{
         }  
     }
 }
-
 void async function(){
     let request = new Request({
         method:'POST',
@@ -242,10 +240,9 @@ void async function(){
             name:'bakenray'
         }
     })
-    let response = await request.send()
+    let response = await request.send();
     let dom = parser.parseHTML(response.body);
     let viewport = images(800,600);
-
     render(viewport,dom);
     viewport.save('viewport.jpg');
 }()

@@ -6,50 +6,38 @@ const server = http.createServer((req,res)=>{
     res.setHeader('X-Foo','bar')
     res.writeHead(200,{'Context-Type':'text/plain'})
     res.end(
-    `	
-    <html maaa=a >
+    `<html maaa=a >
     <head>
         <style>
-            .main{
-                width:800px;
-                height:600px;
-                display:flex;
-            }
-            body{
-                background:#ccc;
-            }
-            .left{
-                width:300px;
-            }
-            .right{
-                width:500px;
-            }
-            .red{   
-                height:200px;   
-                background:red;
-            }
-            .green{
-                height:500px;  
-                background:green
-            }
-            .white{
-                height:300px;   
-                background:white
-            }
+    body{
+        margin:0;
+        padding:0;
+        background:#eee;
+    }
+    #container{
+        width:500px;
+        height:300px;
+        display:flex;
+        background-color:rgb(0,0,255);
+    }
+    #container #myid{
+      width:200px;
+      height:100px;
+      background-color:rgb(255,0,0)
+    }
+    #container .c1{
+      flex:1;
+      background-color:rgb(0,255,0)
+    }
         </style>
     </head>
     <body>
-        <div class="main">  
-            <div class="left">
-                <div class="red"></div>
-                <div class="white"></div> 
-            </div>
-            <div class="right">
-                <div class="green"></div>
-            </div>    
+        <div id="container">
+          <div id="myid"></div>
+          <div class="c1"></div>
         </div>
     </body>
-    </html>`
+</html>`
 )
 })
 server.listen(8088,()=>{

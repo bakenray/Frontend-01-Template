@@ -3,6 +3,7 @@ const images = require('images');
 function render(viewport,element){
   if(element.style){
     var img = images(element.style.width,element.style.height);
+
     if(element.style['background-color']){
         let color = element.style['background-color'] || 'rgb(0,0,0)';
         color.match(/rgb\((\d+),(\d+),(\d+)\)/);
@@ -16,4 +17,5 @@ function render(viewport,element){
     }
   }
 }
+
 module.exports = render;
