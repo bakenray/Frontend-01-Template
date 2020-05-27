@@ -51,8 +51,8 @@ for(let li of lists){
 }
 console.log(result);
 ```
-[收集结果](https://www.bakenray.com/Frontend-01-Template/week07/css/css-standards.json)
-
+[收集结果](https://github.com/bakenray/Frontend-01-Template/blob/master/week07/css/css-standards.json)
+           
 ## 收集CSS属性相关标准
 ```
 let iframe = document.createElement('ifranme');
