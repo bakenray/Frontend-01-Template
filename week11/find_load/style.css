@@ -1,0 +1,23 @@
+#container{
+  width:701px;
+  display: flex;
+  flex-wrap: wrap;
+  margin:20px auto;
+}
+.cell{
+  width:6px;
+  height:6px;
+  background-color:gray;
+  border-bottom:solid 1px white;
+  border-right:solid 1px white;
+}
+.btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btns button {
+  padding:8px 20px;
+  margin:auto  20px;
+  font-size: 18px;
+}
