@@ -1,15 +1,20 @@
 void async function(){
-    let light = document.querySelector('.triffic_light');
+    let lights = document.querySelectorAll('.triffic_light');
     await changeColor()
 
     async function changeColor(){
-        await lightTimeOut('red',10000)
-        await lightTimeOut('yellow',2000)
-        await lightTimeOut('green',5000)
+        while(true){
+            await lightTimeOut(lights[0],'red',10000)
+            await lightTimeOut(lights[1],'yellow',2000)
+            await lightTimeOut(lights[2],'green',5000)
+        }
     }
-    async function lightTimeOut(color,timeOut){       
+    async function lightTimeOut(ele,color,timeOut){       
         return new Promise((resolve) => {
-            light.classList.add(color)
+            for(let i = 0; i<lights.length;i++){
+                lights[i].classList.remove('red','green','yellow')
+            }
+            ele.classList.add(color)
             setTimeout(resolve,timeOut)
         })
     }
