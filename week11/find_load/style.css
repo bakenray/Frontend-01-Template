@@ -17,7 +17,15 @@
   align-items: center;
 }
 .btns button {
-  padding:8px 20px;
+  padding:5px 20px;
   margin:auto  20px;
   font-size: 18px;
+}
+.btns input {
+  height: 30px;
+}
+.btns p {
+  font-size: 12px;
+  padding:10px;
+  color:rgb(180, 180, 180);
 }

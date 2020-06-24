@@ -112,7 +112,7 @@ for(let y = 0; y < 100; y++){
 }
 
 events()
-findPath(map,[0,0],[50,50])
+
 
 
 function events(){
@@ -152,7 +152,6 @@ async function findPath(map,start,end){
 
     while(collection.length){
         let [x,y] = collection.take()
-        console.log(x,y)
         if(x === end[0] && y === end[1]){
             let path = []
             while(x !== start[0] || y !== start[1]){
@@ -160,7 +159,6 @@ async function findPath(map,start,end){
                 container.children[y * 100 + x].style.backgroundColor = 'pink';     
                 [x,y] = map[y * 100 + x]          
             }
-            console.log('path',path)
             return path
         }
         await insert([x - 1,y],[x,y])
@@ -182,3 +180,8 @@ function sleep(t){
     })
 }
 
+function findLoad(){
+    let inputs = document.getElementById('inputs');
+    let arr = inputs.value.split(',').map((item)=>{ return Number(item)})
+    findPath(map,[0,0],arr)
+}
