@@ -1,3 +1,33 @@
+
+class Sorted {
+    constructor(data,compare){
+        this.data = data
+        this.compare = compare || ((a,b) => a - b)
+    }
+    take(){
+        if(this.data.length)
+            return
+
+        let min = this.data[0]
+        let minIndex = 0
+        for(let i = 1; i<this.data.length; i++){
+            if(this.compare(this.data[i],min) < 0){
+                min = this.data[i]
+                minIndex = i
+            }
+        }
+        this.data[minIndex] = this.data[this.data.length - 1];
+        this.data.pop()       
+        return min
+    }
+    insert(v){
+        this.data.push(v)
+    }
+    get length(){
+        return this.data.length
+    }
+}
+
 let storageMap = localStorage.map
 let map = storageMap ? JSON.parse(storageMap) : new Array(10000).fill(0);
 let mouse = false;
@@ -41,7 +71,15 @@ function events(){
 
 async function findPath(map,start,end){
     map = map.slice()
-    let queue = [start]
+
+    function distance([x,y]){
+        return (x - end[0]) ** 2 + (y - end[1]) ** 2;
+    }
+
+    let collection = new Sorted([start],(a,b)=> distance(a) - distance(b))
+
+    container.children[start[1] * 100 + start[0]].style.backgroundColor = 'green'
+    container.children[end[1] * 100 + end[0]].style.backgroundColor = 'red'
 
     async function insert([x,y],pre){
         if(map[100 * y + x] !==0){
@@ -54,11 +92,11 @@ async function findPath(map,start,end){
         map[100 * y + x] = pre
         container.children[y * 100 + x].style.backgroundColor = 'lightgreen'
         await sleep(1)
-        queue.push([x,y])
+        collection.push([x,y])
     }
 
-    while(queue.length){
-        let [x,y] = queue.shift()
+    while(collection.length){
+        let [x,y] = collection.take()
         // console.log(x,y)
         if(x === end[0] && y === end[1]){
             let path = []
