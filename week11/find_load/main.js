@@ -41,32 +41,45 @@ function events(){
 
 async function findPath(map,start,end){
     map = map.slice()
-
     let queue = [start]
 
-    async function insert([x,y]){
+    async function insert([x,y],pre){
         if(map[100 * y + x] !==0){
             return
         }
         if(x < 0 || y < 0 || x >= 100 || y >=100){
             return
         }
-        map[100 * y + x] = 2
+
+        map[100 * y + x] = pre
         container.children[y * 100 + x].style.backgroundColor = 'lightgreen'
-        await sleep(5)
+        await sleep(1)
         queue.push([x,y])
     }
 
     while(queue.length){
         let [x,y] = queue.shift()
-        if(x === end[0] && y === end[1])
-            return true
-        await insert([x - 1,y])
-        await insert([x + 1,y])
-        await insert([x,y - 1])
-        await insert([x,y + 1])
+        // console.log(x,y)
+        if(x === end[0] && y === end[1]){
+            let path = []
+            while(x !== start[0] || y !== start[1]){
+                path.push([x,y])
+                container.children[y * 100 + x].style.backgroundColor = 'pink'     
+                [x,y] = map[y * 100 +x]          
+            }
+            return path
+        }
+        await insert([x - 1,y],[x,y])
+        await insert([x + 1,y],[x,y])
+        await insert([x,y - 1],[x,y])
+        await insert([x,y + 1],[x,y])
+
+        await insert([x - 1,y - 1],[x,y])
+        await insert([x + 1,y - 1],[x,y])
+        await insert([x - 1,y + 1],[x,y])
+        await insert([x + 1,y + 1],[x,y])
     }
-    return false
+    return null
 }
 
 function sleep(t){
