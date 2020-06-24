@@ -64,9 +64,10 @@ async function findPath(map,start,end){
             let path = []
             while(x !== start[0] || y !== start[1]){
                 path.push([x,y])
-                container.children[y * 100 + x].style.backgroundColor = 'pink'     
-                [x,y] = map[y * 100 +x]          
+                container.children[y * 100 + x].style.backgroundColor = 'pink';     
+                [x,y] = map[y * 100 + x]          
             }
+            console.log('path',path)
             return path
         }
         await insert([x - 1,y],[x,y])
