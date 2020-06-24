@@ -9,12 +9,14 @@ void async function(){
             await lightTimeOut(lights[2],'green',5000)
         }
     }
-    async function lightTimeOut(ele,color,timeOut){       
+    async function lightTimeOut(ele,color,timeOut){
+
         return new Promise((resolve) => {
             for(let i = 0; i<lights.length;i++){
-                lights[i].classList.remove('red','green','yellow')
+                lights[i].classList.remove('red','green','yellow')               
             }
             ele.classList.add(color)
+            ele.innerText = timeOut/1000 
             setTimeout(resolve,timeOut)
         })
     }
