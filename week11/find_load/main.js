@@ -127,6 +127,9 @@ function events(){
 async function findPath(map,start,end){
     map = map.slice()
 
+    let table = new Array(10000).fill(Infinity)
+    table[start[1]*100 + start[0]] = 0
+
     function distance([x,y]){
         return (x - end[0]) ** 2 + (y - end[1]) ** 2;
     }
@@ -136,15 +139,18 @@ async function findPath(map,start,end){
     container.children[start[1] * 100 + start[0]].style.backgroundColor = 'green'
     container.children[end[1] * 100 + end[0]].style.backgroundColor = 'red'
 
-    async function insert([x,y],pre){
-        if(map[100 * y + x] !==0){
+    async function insert([x,y],pre,fromStart){
+        if(map[100 * y + x] ===1){
             return
         }
         if(x < 0 || y < 0 || x >= 100 || y >=100){
             return
         }
-
+        if(fromStart >= table[100*y + x]){
+            return
+         }
         map[100 * y + x] = pre
+        table[100 * y + x] = fromStart
         container.children[y * 100 + x].style.backgroundColor = 'lightgreen'
         await sleep(1)
         collection.insert([x,y])
@@ -152,6 +158,7 @@ async function findPath(map,start,end){
 
     while(collection.length){
         let [x,y] = collection.take()
+        let fromStart = table[100*y +x]
         if(x === end[0] && y === end[1]){
             let path = []
             while(x !== start[0] || y !== start[1]){
@@ -161,15 +168,15 @@ async function findPath(map,start,end){
             }
             return path
         }
-        await insert([x - 1,y],[x,y])
-        await insert([x + 1,y],[x,y])
-        await insert([x,y - 1],[x,y])
-        await insert([x,y + 1],[x,y])
+        await insert([x - 1,y],[x,y],fromStart+1)
+        await insert([x + 1,y],[x,y],fromStart+1)
+        await insert([x,y - 1],[x,y],fromStart+1)
+        await insert([x,y + 1],[x,y],fromStart+1)
 
-        await insert([x - 1,y - 1],[x,y])
-        await insert([x + 1,y - 1],[x,y])
-        await insert([x - 1,y + 1],[x,y])
-        await insert([x + 1,y + 1],[x,y])
+        await insert([x - 1,y - 1],[x,y],fromStart+1.4)
+        await insert([x + 1,y - 1],[x,y],fromStart+1.4)
+        await insert([x - 1,y + 1],[x,y],fromStart+1.4)
+        await insert([x + 1,y + 1],[x,y],fromStart+1.4)
     }
     return null
 }
