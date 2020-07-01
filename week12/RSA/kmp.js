@@ -16,7 +16,7 @@ function find(source,pattern){
 }
 
 
-// 高效，但是错误的
+// 高效，但是需要处理特殊case
 function find(source,pattern){
     let table  =  new Array(pattern.length).fill(0)
     let k= 0;
