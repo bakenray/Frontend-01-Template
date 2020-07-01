@@ -29,7 +29,6 @@ function* tokenize(source){
     }
     yield {type:"EOF"}
 }
-
 function Expression(source){
     if(source[0].type === 'AdditiveExpression' && source[1].type === 'EOF'){
         let node = {
@@ -119,7 +118,6 @@ function MultiplicativeExpression(source){
     }
     throw new Error();
 }
-
 for(let token of tokenize("5 + 1024 * 2")){
     if(token.type!== 'Whitespace' && token.type !== 'LineTerminator')
     source.push(token)
