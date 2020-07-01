@@ -1,10 +1,10 @@
-var regexp = /([0-9\.]+)|([ ]+)|([\r\n]+)|(\+)|(\-)|(\*)|(\/)/g
-
-var dictionary = ['Number','Whitespace','LineTerminator','+','-','*','/']
+let regexp = /([0-9\.]+)|([ ]+)|([\r\n]+)|(\+)|(\-)|(\*)|(\/)/g
+let dictionary = ['Number','Whitespace','LineTerminator','+','-','*','/']
+let source = []
 
 function* tokenize(source){
-    var result = null;
-    var lastIndex = 0;
+    let result = null;
+    let lastIndex = 0;
 
     while(true) {
         lastIndex = regexp.lastIndex
@@ -19,7 +19,7 @@ function* tokenize(source){
             value:null
         }
 
-        for(var i = 0; i < dictionary.length; i++){
+        for(let i = 0; i < dictionary.length; i++){
             if(result[i+1]){
                 token.type = (dictionary[i])
             }           
@@ -37,13 +37,46 @@ function AdditiveExpression(source){
     
 }
 // 连乘
-function MultiplicativeExpression(source){
-    console.log(source)
-}
-let source = []
+function MultiplicativeExpression(source){  
+    if(source[0].type === 'Number'){
+        let node = {
+            type:'MultiplicativeExpression',
+            children:source.shift()
+        }
+        source.unshift(node)
+        return MultiplicativeExpression(source)
+    }
+    if(source[0].type === 'MultiplicativeExpression' && 
+       source.length > 1 && 
+       source[1].type=== "*" ){
 
-for(let token of tokenize("1024 + 10 * 25")){
+        let node = {
+            type:'MultiplicativeExpression',
+            children:[source.shift(),source.shift(),source.shift()]
+        }
+        source.unshift(node)
+        return MultiplicativeExpression(source)
+    }
+    if(source[0].type === 'MultiplicativeExpression' && 
+       source.length > 1 && 
+       source[1].type === '/' ){
+        let node = {
+            type:'MultiplicativeExpression',
+            children:[source.shift(),source.shift(),source.shift()]
+        }
+        source.unshift(node)
+        return MultiplicativeExpression(source)
+    }
+
+    if(source[0].type === 'MultiplicativeExpression'){
+        return source[0]
+    }
+    throw new Error();
+}
+
+for(let token of tokenize("1024 * 2")){
     if(token.type!== 'Whitespace' && token.type !== 'LineTerminator')
     source.push(token)
 }
-MultiplicativeExpression(source)
+
+console.log(MultiplicativeExpression(source)) 
