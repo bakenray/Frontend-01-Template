@@ -34,9 +34,46 @@ function Expression(tokens){
     
 }
 function AdditiveExpression(source){
-    
+    if(source[0].type === 'Number'){
+        MultiplicativeExpression(source)
+        return AdditiveExpression(source)
+    }
+    if(source[0].type === 'MultiplicativeExpression'){
+        let node = {
+            type:'AdditiveExpression',
+            children:[source.shift()]
+        }
+        source.unshift(node)
+        return AdditiveExpression(source)
+    }
+    if(source[0].type === 'AdditiveExpression' && 
+       source.length >1 && 
+       source[1].type === '+' ){
+        let node = {
+            type:'AdditiveExpression',
+            children:[source.shift(),source.shift()]
+        }
+        MultiplicativeExpression(source)
+        node.children.push(source.shift())
+        source.unshift(node)
+        return AdditiveExpression(source)
+    } 
+    if(source[0].type === 'AdditiveExpression' && 
+       source.length >1 && 
+       source[1].type === '-' ){
+        let node = {
+            type:'AdditiveExpression',
+            children:[source.shift(),source.shift()]
+        }
+        MultiplicativeExpression(source)
+        node.children.push(source.shift())
+        source.unshift(node)
+        return AdditiveExpression(source)
+    } 
+    if(source[0].type === 'AdditiveExpression'){
+        return source[0]
+    }
 }
-// 连乘
 function MultiplicativeExpression(source){  
     if(source[0].type === 'Number'){
         let node = {
@@ -74,9 +111,10 @@ function MultiplicativeExpression(source){
     throw new Error();
 }
 
-for(let token of tokenize("1024 * 2")){
+for(let token of tokenize("5 + 1024 * 2")){
     if(token.type!== 'Whitespace' && token.type !== 'LineTerminator')
     source.push(token)
 }
 
-console.log(MultiplicativeExpression(source)) 
+// console.log(MultiplicativeExpression(source)) 
+console.log(AdditiveExpression(source)) 
