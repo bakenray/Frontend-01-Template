@@ -30,8 +30,17 @@ function* tokenize(source){
     yield {type:"EOF"}
 }
 
-function Expression(tokens){
-    
+function Expression(source){
+    if(source[0].type === 'AdditiveExpression' && source[1].type === 'EOF'){
+        let node = {
+            type:'Expression',
+            children:[source.shift(),source.shift()]
+        }
+        source.unshift(node)
+        return node
+    }
+    AdditiveExpression(source)
+    return Expression(source)
 }
 function AdditiveExpression(source){
     if(source[0].type === 'Number'){
@@ -116,5 +125,4 @@ for(let token of tokenize("5 + 1024 * 2")){
     source.push(token)
 }
 
-// console.log(MultiplicativeExpression(source)) 
-console.log(AdditiveExpression(source)) 
+console.log(Expression(source)) 
