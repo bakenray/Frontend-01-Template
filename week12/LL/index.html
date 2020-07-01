@@ -4,8 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>四则运算LL语法分析</title>
+    <style>
+        input{
+            display: block;
+            width:300px;
+            height:30px;
+            border-radius: 4px;
+            outline: none;
+            text-indent: 1em;
+            margin:50px auto 0 auto;
+        }
+        button{
+            display: block;
+            widows: 100px;
+            padding:10px 20px;
+            border-radius: 4px;
+            background-color: skyblue;
+            border: none;
+            color:#fff;
+            margin:20px auto;
+        }
+        .code{
+            border:1px dashed #ccc;
+        }
+    </style>
 </head>
 <body>
+    <input id="inputId" type="text" placeholder="输入四则运算，例如:10*2+1">
+    <button onclick="parseToken()">分析结果</button>
+    <pre class="code" ></pre>
     <script src="LL.js"></script>
+    <script>
+        function parseToken(){
+            let eleCode = document.querySelector('.code')
+            let value = document.getElementById('inputId').value 
+            if(value.length<1)
+                return  
+
+            let sourceToken = computedToken(value)
+            let result = Expression(sourceToken)
+            eleCode.innerHTML = JSON.stringify(result,null,'  ')
+        }
+    </script>
 </body>
 </html>

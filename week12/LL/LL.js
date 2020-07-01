@@ -118,9 +118,12 @@ function MultiplicativeExpression(source){
     }
     throw new Error();
 }
-for(let token of tokenize("5 + 1024 * 2")){
-    if(token.type!== 'Whitespace' && token.type !== 'LineTerminator')
-    source.push(token)
+function computedToken(tokens){
+    for(let token of tokenize(tokens)){
+        if(token.type!== 'Whitespace' && token.type !== 'LineTerminator')
+        source.push(token)
+    }
+    return source
 }
 
-console.log(Expression(source)) 
+// console.log(Expression(source)) 
