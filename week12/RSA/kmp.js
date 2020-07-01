@@ -15,7 +15,6 @@ function find(source,pattern){
     return false
 }
 
-
 // 高效，但是需要处理特殊case
 function find(source,pattern){
     let table  =  new Array(pattern.length).fill(0)
