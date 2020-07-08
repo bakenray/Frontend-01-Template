@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hans">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>drag_demo</title>
 </head>
+<style>
+  #dragable{
+    width:100px;
+    height:100px;
+    border-radius:5px;
+    background-color: pink;
+    display: inline-block;
+  }
+</style>
 <body>
   <div id="texts"> 
     文字文字文字文字文字文字文字文字文字文字文字文字文字
@@ -32,7 +41,7 @@
     文字文字文字文字文字文字文字文字文字文字文字文字文字
     文字文字文字文字文字文字文字文字 
   </div>
-  <div id="dragable" style="width:100px;height:100px;background-color: pink;display: inline-block;"></div>
+  <div id="dragable"></div>
  <script>
     let dragable = document.getElementById('dragable')
     let baseX = 0
@@ -80,7 +89,7 @@
       }
       return nearestRange
     }
-    // 进制选择文字
+    // 禁止选择文字
     document.addEventListener('selectstart', event => event.preventDefault());
 
   </script>

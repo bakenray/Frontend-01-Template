@@ -32,6 +32,10 @@
             height:300px;
             border-radius: 50%;
         }
+        #text{
+            text-align: center;
+            margin:30px;
+        }
     </style>
 </head>
 <body>
@@ -39,7 +43,8 @@
         <input id="r" type="range" min="0" max="255" /> <br>
         <input id="g" type="range" min="0" max="255" /> <br>
         <input id="b" type="range" min="0" max="255" />
-        <div id="color" style="background-color:rgb(0,0,0)"></div>      
+        <div id="color" style="background-color:rgb(0,0,0)"></div>   
+        <div id="text">Hello {{name}}! </div>
     </div>
 
     <script src="./proxy_reactive.js"></script>  

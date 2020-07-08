@@ -74,6 +74,18 @@ g.addEventListener('input',event =>{
 b.addEventListener('input',event =>{
     p.b = Number(event.target.value)
 })
+
 effect(() => {     
     colorCont.style.backgroundColor = `rgb(${p.r},${p.g},${p.b})`
+})
+
+let text = document.getElementById('text')
+let range = document.createRange()
+range.setStart(text.childNodes[0],6)
+range.setEnd(text.childNodes[0],14)
+
+let data = reactive({text:'World'})
+effect(() => {     
+    range.extractContents();
+    range.insertNode(document.createTextNode(data.text))
 })
