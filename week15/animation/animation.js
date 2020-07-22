@@ -1,30 +1,42 @@
 export class Timeline {
   constructor(){
-    this.animation = []
-  }
-  tick(){ //时钟的秒.
-    let t = Date.now() - this.startTime 
-
-    for(let animation of this.animation){
-
-      if(t>animation.duration + animation.delay)
-        continue
-
-      let {object,property,timingFunction,start,end,delay,template,duration} = animation
-      let progression = timingFunction((t - delay ) / duration); //0-1之间
-      let value = start + progression * (end - start)
-    
-      object[property] = template(value)
-     
+    this.animations = []
+    this.requestID = null
+    this.tick = ()=> { 
+      let t = Date.now() - this.startTime 
+      let animations = this.animations.filter(animation => !animation.finished)
+      for(let animation of animations){
+        let {object,property,timingFunction,start,end,delay,template,duration} = animation
+        let progression = timingFunction((t - delay ) / duration); 
+  
+        if(t > animation.duration + animation.delay){
+          progression = 1
+          animation.finished = true
+        }
+        
+        let value = start + progression * (end - start) 
+      
+        object[property] = template(value)
+       
+      }
+      if(animations.length){
+        this.requestID = requestAnimationFrame(this.tick)
+      }
     }
-    requestAnimationFrame(()=> this.tick())
+  }
+  tick(){
+    
+  }
+  pause(){
+    cancelAnimationFrame(this.requestID)
+
   }
   start(){
     this.startTime = Date.now()
     this.tick()
   }
   add(animation){
-    this.animation.push(animation)
+    this.animations.push(animation)
   }
 }
 export class Animation {
