@@ -7,11 +7,11 @@ export class Timeline {
       let t = Date.now() - this.startTime 
       let animations = this.animations.filter(animation => !animation.finished)
       for(let animation of animations){
-        let {object,property,timingFunction,start,end,delay,template,duration} = animation
-        let progression = timingFunction((t - delay ) / duration); 
+        let {object,property,timingFunction,start,end,delay,template,duration,startTime} = animation
+        let progression = timingFunction((t - delay - startTime ) / duration); 
   
         if(t > animation.duration + animation.delay){
-          progression = 1
+          progression = 1 
           animation.finished = true
         }
         
@@ -32,24 +32,38 @@ export class Timeline {
     this.startTime = Date.now()
     this.tick()
   }
-  add(animation){
+  add(animation,startTime){
     this.animations.push(animation)
+    animation.finished = false
+    if(this.state ==='playing')
+      animation.startTime = startTime || Date.now()
+    else
+      animation.startTime = startTime || 0
   }
   pause(){
-    if(this.state != "playing")
+    if(this.state !== "playing")
       return
-
     this.state = "pause"
     this.pauseTime = Date.now()
     if(this.requestID !== null)
       cancelAnimationFrame(this.requestID)
   }
   resume(){
-    if(this.state != "pause")
+    if(this.state !== "pause")
       return
-
     this.state = "playing"
     this.startTime  += Date.now() - this.pauseTime //扣掉暂停时间
+    this.tick()
+  }
+  restart(){
+    if(this.state === 'playing'){
+      this.pause
+    }
+    this.animations = []
+    this.requestID = null
+    this.state = "playing"
+    this.startTime = Date.now()
+    this.pauseTime = null
     this.tick()
   }
 }
