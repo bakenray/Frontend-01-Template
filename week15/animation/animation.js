@@ -2,6 +2,7 @@ export class Timeline {
   constructor(){
     this.animations = []
     this.requestID = null
+    this.state = "inited"
     this.tick = ()=> { 
       let t = Date.now() - this.startTime 
       let animations = this.animations.filter(animation => !animation.finished)
@@ -25,6 +26,9 @@ export class Timeline {
     }
   }
   start(){
+    if(this.state != "inited")
+    return
+    this.state = "playing"
     this.startTime = Date.now()
     this.tick()
   }
@@ -32,11 +36,19 @@ export class Timeline {
     this.animations.push(animation)
   }
   pause(){
+    if(this.state != "playing")
+      return
+
+    this.state = "pause"
     this.pauseTime = Date.now()
     if(this.requestID !== null)
       cancelAnimationFrame(this.requestID)
   }
   resume(){
+    if(this.state != "pause")
+      return
+
+    this.state = "playing"
     this.startTime  += Date.now() - this.pauseTime //扣掉暂停时间
     this.tick()
   }
