@@ -7,7 +7,7 @@ export class Timeline {
       let t = Date.now() - this.startTime 
       let animations = this.animations.filter(animation => !animation.finished)
       for(let animation of animations){
-        let {object,property,timingFunction,start,end,delay,template,duration,addTime} = animation
+        let {object,property,timingFunction,start,end,delay,duration,addTime,template} = animation
         let progression = timingFunction((t - delay - addTime ) / duration); 
   
         if(t > duration + delay + addTime){
@@ -15,7 +15,7 @@ export class Timeline {
           animation.finished = true
         }
         
-        let value = start + progression * (end - start) 
+        let value = animation.valueFromProgression(progression)
       
         object[property] = template(value)
        
@@ -68,7 +68,7 @@ export class Timeline {
   }
 }
 export class Animation {
-  constructor(object,property,template,start,end,duration,delay,timingFunction){
+  constructor(object,property,start,end,duration,delay,timingFunction,template){
     this.object = object
     this.property = property
     this.template = template
@@ -77,5 +77,29 @@ export class Animation {
     this.duration = duration
     this.delay = delay
     this.timingFunction = timingFunction   
+  }
+  valueFromProgression(progression){
+    return this.start + progression * (this.end - this.start)
+  }
+}
+export class ColorAnimation {
+  constructor(object,property,start,end,duration,delay,timingFunction,template){
+    this.object = object
+    this.property = property
+    this.template = template || (v => `rgba(${v.r},${v.g},${v.b},${v})`)
+    this.start = start
+    this.end = end
+    this.duration = duration
+    this.delay = delay
+    this.timingFunction = timingFunction   
+  }
+  valueFromProgression(progression){
+    
+    return {
+      r:this.start.r + progression * (this.end.r - this.start.r),
+      g:this.start.g + progression * (this.end.g - this.start.g),
+      b:this.start.b + progression * (this.end.b - this.start.b),
+      a:this.start.a + progression * (this.end.a - this.start.a),
+    }
   }
 }
