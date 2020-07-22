@@ -86,7 +86,7 @@ export class ColorAnimation {
   constructor(object,property,start,end,duration,delay,timingFunction,template){
     this.object = object
     this.property = property
-    this.template = template || (v => `rgba(${v.r},${v.g},${v.b},${v})`)
+    this.template = template || (v => `rgba(${v.r},${v.g},${v.b},${v.a})`)
     this.start = start
     this.end = end
     this.duration = duration
@@ -94,7 +94,7 @@ export class ColorAnimation {
     this.timingFunction = timingFunction   
   }
   valueFromProgression(progression){
-    
+    console.log('xxx',progression)
     return {
       r:this.start.r + progression * (this.end.r - this.start.r),
       g:this.start.g + progression * (this.end.g - this.start.g),
