@@ -10,7 +10,7 @@ export class Timeline {
         let {object,property,timingFunction,start,end,delay,template,duration,startTime} = animation
         let progression = timingFunction((t - delay - startTime ) / duration); 
   
-        if(t > animation.duration + animation.delay){
+        if(t > duration + delay + startTime){
           progression = 1 
           animation.finished = true
         }
@@ -36,9 +36,9 @@ export class Timeline {
     this.animations.push(animation)
     animation.finished = false
     if(this.state ==='playing')
-      animation.startTime = startTime || Date.now()
+      animation.startTime = startTime !== void 0 ? startTime : Date.now() - this.startTime
     else
-      animation.startTime = startTime || 0
+      animation.startTime = startTime !== void 0 ? startTime : 0
   }
   pause(){
     if(this.state !== "playing")
