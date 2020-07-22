@@ -10,10 +10,13 @@ export class Timeline {
       if(t>animation.duration + animation.delay)
         continue
 
-      let {object,property,template,start,end,delay,timingFunction} = animation
-      let progression = timingFunction((t - delay)/delay)  //0-1之间
-      let value = start + progression * (end -start)
+      let {object,property,timingFunction,start,end,delay,template,duration} = animation
+      let progression = timingFunction((t - delay ) / duration); //0-1之间
+      let value = start + progression * (end - start)
       
+      console.log('ttt',t)
+      console.log('delay',delay)
+
       object[property] = template(value)
      
     }
