@@ -24,19 +24,21 @@ export class Timeline {
       }
     }
   }
-  tick(){
-    
-  }
-  pause(){
-    cancelAnimationFrame(this.requestID)
-
-  }
   start(){
     this.startTime = Date.now()
     this.tick()
   }
   add(animation){
     this.animations.push(animation)
+  }
+  pause(){
+    this.pauseTime = Date.now()
+    if(this.requestID !== null)
+      cancelAnimationFrame(this.requestID)
+  }
+  resume(){
+    this.startTime  += Date.now() - this.pauseTime //扣掉暂停时间
+    this.tick()
   }
 }
 export class Animation {
