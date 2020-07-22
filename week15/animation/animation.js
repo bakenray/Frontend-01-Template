@@ -11,8 +11,10 @@ export class Timeline {
         continue
 
       let {object,property,template,start,end,delay,timingFunction} = animation
+      let progression = timingFunction((t - delay)/delay)  //0-1之间
+      let value = start + progression * (end -start)
       
-      object[property] = template(timingFunction(start,end)(t - delay))
+      object[property] = template(value)
      
     }
     requestAnimationFrame(()=> this.tick())
@@ -34,11 +36,6 @@ export class Animation {
     this.end = end
     this.duration = duration
     this.delay = delay
-    this.timingFunction = timingFunction || ((start,end) => {    
-      return (t) => start + (t / duration) * (end - start)
-    })
-
-    console.log('x',this.timingFunction())
-    
+    this.timingFunction = timingFunction   
   }
 }
