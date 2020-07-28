@@ -3,20 +3,22 @@ let contexts = Object.create(null)
 let MOUSE_SYMBOL = Symbol('mouse')
 
 // 鼠标事件
-element.addEventListener('mousedown',(event)=>{
-  contexts[MOUSE_SYMBOL] = Object.create(null)
-  start(event,contexts[MOUSE_SYMBOL])
-  let mousemove = event => {
-    move(event,contexts[MOUSE_SYMBOL])
-  }
-  let mouseend = event => {
-    end(event)
-    document.removeEventListener('mousemove',mousemove)
-    document.removeEventListener('mouseup',mouseend)
-  }
-  document.addEventListener('mousemove',mousemove)
-  document.addEventListener('mouseup',mouseend)
-})
+if(document.ontouchstart !== null){ 
+  element.addEventListener('mousedown',(event)=>{
+    contexts[MOUSE_SYMBOL] = Object.create(null)
+    start(event,contexts[MOUSE_SYMBOL])
+    let mousemove = event => {
+      move(event,contexts[MOUSE_SYMBOL])
+    }
+    let mouseend = event => {
+      end(event,contexts[MOUSE_SYMBOL])
+      document.removeEventListener('mousemove',mousemove)
+      document.removeEventListener('mouseup',mouseend)
+    }
+    document.addEventListener('mousemove',mousemove)
+    document.addEventListener('mouseup',mouseend)
+  })
+}
 
 // 手势事件
 element.addEventListener('touchstart',event => {
