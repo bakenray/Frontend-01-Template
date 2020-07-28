@@ -52,6 +52,7 @@ element.addEventListener('touchcancel',event => {
 let start = (point,context)=>{
   context.startX = point.clientX
   context.startY = point.clientY
+  context.moves = []
   context.isTap = true
   context.isPan = false
   context.isPress = false
@@ -77,8 +78,16 @@ let move = (point,context)=>{
     context.isPress = false
     console.log('panStart')
   }
+
   if(context.isPan){
+    context.moves.push({
+      dx,
+      dy,
+      t:Date.now()
+    })
+    context.moves = context.moves.filter(record => Date.now() - record.t < 300)
     console.log('panning')
+
   }
 }
 
@@ -87,6 +96,13 @@ let end = (point,context)=> {
     console.log('tapEnd')
   }
   if(context.isPan){
+    let dx = point.clientX - context.startX
+    let dy = point.clientY - context.startY
+    let record = context.moves[0]
+    let speed = Math.sqrt((record.dx - dx) ** 2 + (record.dy - dy) ** 2) / (Date.now() - record.t)
+    if(speed > 2.5){
+      console.log('flick')
+    }
     console.log('panEnd')
   }
   if(context.isPress){
