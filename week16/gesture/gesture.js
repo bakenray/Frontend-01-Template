@@ -121,6 +121,7 @@ function enableGesture(element){
       let record = context.moves[0]
       let speed = Math.sqrt((record.dx - dx) ** 2 + (record.dy - dy) ** 2) / (Date.now() - record.t)
       let isFlick = speed > 2.5
+
       if(isFlick){
         element.dispatchEvent(new CustomEvent('flick',{
           startX:context.startX,
@@ -131,21 +132,17 @@ function enableGesture(element){
         }))
       }
 
-      element.dispatchEvent(new CustomEvent('panend',{
-        startX:context.startX,
-        startY:context.startY,
-        clientX:point.clientX,
-        clientY:point.clientY,
-        speed:speed,
-        isFlick:isFlick
-      }))
-      Object.assign(e,{
-        startX:context.startX,
-        startY:context.startY,
-        clientX:point.clientX,
-        clientY:point.clientY
-      })
+      element.dispatchEvent(Object.assign(new CustomEvent('panend',{
+          startX:context.startX,
+          startY:context.startY,
+          clientX:point.clientX,
+          clientY:point.clientY,
+          speed:speed,
+          isFlick:isFlick
+        }))
+      ) 
     }
+    
     if(context.isPress){
       element.dispatchEvent(new CustomEvent('pressend',{}))
     }
