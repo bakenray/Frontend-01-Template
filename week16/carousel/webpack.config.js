@@ -9,14 +9,8 @@ module.exports ={
           loader:'babel-loader',
           options:{
             presets:['@babel/preset-env'],
-            plugins:[["@babel/plugin-transform-react-jsx",{pragma:'create'}]]
+            plugins:[["@babel/plugin-transform-react-jsx",{pragma:'createElement'}]]
           }
-        }
-      },
-      {
-        test:/\.ray/,
-        use:{
-          loader:require.resolve('./myloader.js')
         }
       }
     ]

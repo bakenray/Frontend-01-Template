@@ -1,5 +1,7 @@
 
-export function create(Cls,attributes,...children){
+import { enableGesture } from './Gesture'
+
+export function createElement(Cls,attributes,...children){
   let o ;
   if(typeof Cls ==='string'){
     o = new Warper(Cls);
@@ -46,6 +48,13 @@ export class Warper{
   }
   setAttribute(name,value){ 
     this.root.setAttribute(name,value)
+    if(name.match(/^on([\s\S]+)$/)){
+      let eventName = RegExp.$1.replace(/^[\s\S]/,c => c.toLowerCase())
+      this.addEventListener(eventName,value)
+    }
+    if(name ==='enableGesture'){
+      enableGesture(this.root)
+    }
   }
   
   appendChild(child){
@@ -63,6 +72,9 @@ export class Warper{
   mountTo(parent){
     parent.appendChild(this.root)
     for(let child of this.children){
+      if(typeof child === 'string'){
+        child = new Text(child)
+      }
       child.mountTo(this.root)
     }
   }
