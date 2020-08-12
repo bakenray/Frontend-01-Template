@@ -83,9 +83,13 @@ function tagOpen(c){
     } else {
         emit({
             type: "text",
+            content : "<"
+        });
+        emit({
+            type: "text",
             content : c
         });
-        return ;
+        return data;
     }
 }
 
