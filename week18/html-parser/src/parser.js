@@ -276,11 +276,7 @@ function scriptDataLessThanSign(c){
             type:"text",
             content:"<"
         });
-        emit({
-            type:"text",
-            content:c
-        });
-        return scriptData;
+        return scriptData(c);
     }
 }
 //in script received </
@@ -297,12 +293,7 @@ function scriptDataEndTagOpen(c){
             type:"text",
             content:"/"
         });
-
-        emit({
-            type:"text",
-            content:"c"
-        });
-        return scriptData;
+        return scriptData(c);
     }
 }
 //in script received </s
@@ -314,11 +305,7 @@ function scriptDataEndTagNameS(c){
             type:"text",
             content:"</s"
         });
-        emit({
-            type:"text",
-            content:c
-        });
-        return scriptData;
+        return scriptData(c);
     }
 }
 
@@ -331,11 +318,7 @@ function scriptDataEndTagNameC(c){
             type:"text",
             content:"</sc"
         });
-        emit({
-            type:"text",
-            content:c
-        });
-        return scriptData;
+        return scriptData(c);
     }
 }
 
@@ -348,11 +331,7 @@ function scriptDataEndTagNameR(c){
             type:"text",
             content:"</scr"
         });
-        emit({
-            type:"text",
-            content:c
-        });
-        return scriptData;
+        return scriptData(c);
     }
 }
 //in script received </scri
@@ -364,11 +343,7 @@ function scriptDataEndTagNameI(c){
             type:"text",
             content:"</scri"
         });
-        emit({
-            type:"text",
-            content:c
-        });
-        return scriptData;
+        return scriptData(c);
     }
 }
 //in script received </scrip
@@ -380,11 +355,7 @@ function scriptDataEndTagNameP(c){
             type:"text",
             content:"</scrip"
         });
-        emit({
-            type:"text",
-            content:c
-        });
-        return scriptData;
+        return scriptData(c);
     }
 }
 //in script received </script
@@ -402,11 +373,7 @@ function scriptDataEndTag(c){
             type:"text",
             content:"</script"
         });
-        emit({
-            type:"text",
-            content:c
-        });
-        return scriptData;
+        return scriptData(c);
     }
 }
 

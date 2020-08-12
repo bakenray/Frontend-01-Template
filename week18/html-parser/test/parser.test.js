@@ -102,17 +102,26 @@ let assert = require('assert')
     assert.ok(count ===3)
   })
   it('script',()=>{   
-    let doc = parseHTML(`<script>
-                          <div>abcd</div>
-                          <span>x<span>
-                          /script>
-                          </script
-                          </scrip
-                          </scri
-                          </scr
-                          </sc
-                          </s
-                          </
-                          <
-                         </script>`)
+    let content = `
+    <div>abcd</div>
+    <span>x<span>
+    /script>
+    </script
+    </scrip
+    </scri
+    </scr
+    </sc
+    </s
+    </
+    < `
+    let doc = parseHTML(`<script>${content}</script>`)
+    let text = doc.children[0].children[0]
+    assert.equal(text.content,content)
+    assert.equal(text.type,"text")
+  })
+  it('attribute with no value',()=>{   
+    let doc = parseHTML("<div class />") 
+  })
+  it('attribute with no value2',()=>{   
+    let doc = parseHTML("<div class id />") 
   })
