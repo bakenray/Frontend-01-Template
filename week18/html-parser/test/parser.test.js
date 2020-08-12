@@ -25,7 +25,7 @@ let assert = require('assert')
   })
 
   it('text with <',()=>{   
-    let doc = parseHTML("<div>a < b</idv>")
+    let doc = parseHTML("<div>a < b</div>")
     let text = doc.children[0].children[0]
     console.log('----------text--------',text)
     assert.equal(text.content,'a < b')
