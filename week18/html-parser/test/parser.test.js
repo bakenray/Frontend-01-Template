@@ -23,12 +23,96 @@ let assert = require('assert')
       assert.equal(e.message,"Tag start end doesn't match!")
     }                         
   })
-
   it('text with <',()=>{   
     let doc = parseHTML("<div>a < b</div>")
     let text = doc.children[0].children[0]
-    console.log('----------text--------',text)
     assert.equal(text.content,'a < b')
     assert.equal(text.type,'text')
+  })
+  it('with property',()=>{   
+    let doc = parseHTML("<div id=a class='cls' data=\"abc\" ></div>")
+    let div = doc.children[0]
+    let count = 0
 
+    for(let attr of div.attributes){
+      if(attr.name ==='id'){
+        count++
+        assert.equal(attr.value,"a")
+        return 
+      }
+      if(attr.name ==='class'){
+        count++
+        assert.equal(attr.value,"cls")
+        return 
+      }
+      if(attr.name ==='data'){
+        count++
+        assert.equal(attr.value,"abc")
+        return 
+      }
+    }
+    assert.ok(count ===3)
+  })
+  it('with property2',()=>{   
+    let doc = parseHTML("<div id=a class='cls' data=\"abc\"></div>") 
+    let div = doc.children[0] 
+    let count = 0 
+
+    for(let attr of div.attributes){
+      if(attr.name ==='id'){
+        count++
+        assert.equal(attr.value,"a")
+        return 
+      }
+      if(attr.name ==='class'){
+        count++
+        assert.equal(attr.value,"cls")
+        return 
+      }
+      if(attr.name ==='data'){
+        count++
+        assert.equal(attr.value,"abc")
+        return 
+      }
+    }
+    assert.ok(count ===3)
+  })
+  it('with property3',()=>{   
+    let doc = parseHTML("<div id=a class='cls' data=\"abc\"/>") 
+    let div = doc.children[0] 
+    let count = 0 
+
+    for(let attr of div.attributes){
+      if(attr.name ==='id'){
+        count++
+        assert.equal(attr.value,"a")
+        return 
+      }
+      if(attr.name ==='class'){
+        count++
+        assert.equal(attr.value,"cls")
+        return 
+      }
+      if(attr.name ==='data'){
+        count++
+        assert.equal(attr.value,"abc")
+        return 
+      }
+    }
+    assert.ok(count ===3)
+  })
+  it('script',()=>{   
+    let doc = parseHTML(`<script>
+                          <div>abcd</div>
+                          <span>x<span>
+                          /script>
+                          </script
+                          </scrip
+                          </scri
+                          </scr
+                          </sc
+                          </s
+                          </
+                          <
+                         </script>`)
   })
