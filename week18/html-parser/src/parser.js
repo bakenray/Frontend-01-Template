@@ -359,8 +359,10 @@ function scriptDataEndTagNameP(c){
     }
 }
 //in script received </script
+let spaces = 0
 function scriptDataEndTag(c){
     if(c == " ") {
+        spaces ++
         return scriptDataEndTag;
     } if(c == ">") {
         emit({
@@ -371,7 +373,7 @@ function scriptDataEndTag(c){
     } else {
         emit({
             type:"text",
-            content:"</script"
+            content:"</script" + new Array(spaces).fill(' ').join('')
         });
         return scriptData(c);
     }

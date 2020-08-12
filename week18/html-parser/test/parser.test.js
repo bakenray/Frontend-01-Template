@@ -113,7 +113,7 @@ let assert = require('assert')
     </sc
     </s
     </
-    < `
+    <`
     let doc = parseHTML(`<script>${content}</script>`)
     let text = doc.children[0].children[0]
     assert.equal(text.content,content)
@@ -124,4 +124,7 @@ let assert = require('assert')
   })
   it('attribute with no value2',()=>{   
     let doc = parseHTML("<div class id />") 
+  })
+  it('element with no attribute',()=>{   
+    let doc = parseHTML("<div/>") 
   })
