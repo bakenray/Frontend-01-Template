@@ -126,5 +126,11 @@ let assert = require('assert')
     let doc = parseHTML("<div class id />") 
   })
   it('element with no attribute',()=>{   
-    let doc = parseHTML("<div/>") 
+    let doc = parseHTML("<div />") 
   })
+  it('tagname with capital',()=>{   
+    let doc = parseHTML("<DIV id=ids> class=cls/ ></DIV>") 
+  })
+  // it('tagname with no attribute value /',()=>{   
+  //   let doc = parseHTML("<div cls=cls/ />") 
+  // })
