@@ -39,6 +39,7 @@ module.exports = class extends Generator {
       'webpack-cli',
       'webpack-dev-server',
       'webpack',
+      'html-webpack-plugin',
       'babel-loader',
       '@babel/core',
       '@babel/preset-env',
