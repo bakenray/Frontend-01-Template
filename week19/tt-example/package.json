@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --require @babel/register",
     "coverage": "nyc mocha",
     "start": "./node_modules/.bin/webpack-dev-server",
     "build": "./node_modules/.bin/webpack"
@@ -16,6 +16,7 @@
     "@babel/core": "^7.11.1",
     "@babel/plugin-transform-react-jsx": "^7.10.4",
     "@babel/preset-env": "^7.11.0",
+    "@babel/register": "^7.10.5",
     "@istanbuljs/nyc-config-babel": "^3.0.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-istanbul": "^6.0.0",
